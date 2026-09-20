@@ -11,7 +11,7 @@ Thank you for being interested in contributing to the project! It wouldn't be wh
 - Git installed on your local machine
 - A text editor or IDE
 - JDK 21
-- A basic understanding of Java
+- A basic understanding of Kotlin
 
 ## Getting Started
 - If you don't already have a GitHub account, you can sign up for one [here](https://github.com/signup).

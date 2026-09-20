@@ -11,7 +11,7 @@ The plugin is in early development. There is no release yet.
 ## Requirements
 
 - Spigot or Paper 1.21 or newer
-- Java 21
+- Java 21 (the plugin is written in Kotlin; the Kotlin standard library is bundled in the jar)
 
 ## Building
 

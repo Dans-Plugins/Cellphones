@@ -1,15 +1,10 @@
 plugins {
-    java
+    kotlin("jvm") version "2.2.20"
+    id("com.gradleup.shadow") version "9.0.2"
 }
 
-group = "dansplugins"
+group = "com.dansplugins"
 version = "0.1.0-SNAPSHOT"
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
 
 repositories {
     mavenCentral()
@@ -21,10 +16,11 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT")
 
     testImplementation("org.spigotmc:spigot-api:1.21.11-R0.1-SNAPSHOT")
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation(kotlin("test"))
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 tasks.processResources {
@@ -40,6 +36,16 @@ tasks.test {
     useJUnitPlatform()
 }
 
+// The shaded jar (with the Kotlin stdlib bundled) is the plugin jar; the plain jar is not built.
 tasks.jar {
+    enabled = false
+}
+
+tasks.shadowJar {
     archiveBaseName.set("Cellphones")
+    archiveClassifier.set("")
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
