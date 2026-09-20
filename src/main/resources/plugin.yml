@@ -1,0 +1,7 @@
+name: Cellphones
+version: '${version}'
+main: dansplugins.cellphones.Cellphones
+api-version: '1.21'
+author: DanTheTechMan
+description: Cell towers and phones: a chat network for servers whose chat is local, so players with a phone in their inventory can talk beyond earshot when they are in tower coverage.
+website: https://github.com/Dans-Plugins/Cellphones
