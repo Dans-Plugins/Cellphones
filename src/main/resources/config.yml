@@ -1,0 +1,34 @@
+# Cellphones configuration. See CONFIG.md for what each key does.
+# Version of this file's layout; the plugin adds missing keys and never removes yours.
+config-version: 1
+
+tower:
+  # Material of the tower item. It is tagged so that an ordinary block of the same material is not a tower.
+  material: LIGHTNING_ROD
+  # Default coverage radius, in blocks, around a tower.
+  radius: 200
+  # When true, distance to a tower ignores height (a tower on a mountain covers the valley below it).
+  ignore-y: true
+  # Whether players may craft towers. When false, only /cellphones give tower hands them out.
+  craftable: true
+
+phone:
+  # Material of the phone item. It is tagged so that an ordinary item of the same material is not a phone.
+  material: RECOVERY_COMPASS
+  # Whether players may craft phones. When false, only /cellphones give phone hands them out.
+  craftable: true
+
+network:
+  # single: every tower belongs to one network, so any two players in coverage can talk.
+  # (Linked networks, where only towers within range of each other relay, are planned.)
+  mode: single
+
+messages:
+  # Placeholders: {sender}, {message}
+  phone-format: "&7[&bPhone&7] &f{sender}&7: &f{message}"
+  no-signal: "&cNo signal."
+  signal: "&aSignal: &f{towers} tower(s) in range."
+  no-phone: "&cYou have no phone."
+  tower-placed: "&aCell tower placed. Coverage radius: &f{radius}&a blocks."
+  tower-removed: "&eCell tower removed."
+  no-permission: "&cYou do not have permission to do that."

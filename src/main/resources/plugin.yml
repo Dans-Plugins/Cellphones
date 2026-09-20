@@ -1,0 +1,27 @@
+name: Cellphones
+version: '${version}'
+main: dansplugins.cellphones.Cellphones
+api-version: '1.21'
+author: DanTheTechMan
+description: Cell towers and phones. Players with a phone in their inventory can chat beyond earshot when they are in tower coverage.
+website: https://github.com/Dans-Plugins/Cellphones
+
+commands:
+  cellphones:
+    description: Cellphones commands. Run '/cellphones help' for a list.
+    usage: /<command> help
+    aliases: [phone, phones]
+
+permissions:
+  cellphones.use:
+    description: Send and receive messages over the phone network and see signal status.
+    default: true
+  cellphones.tower.place:
+    description: Place and break cell towers.
+    default: true
+  cellphones.admin:
+    description: Give items, list and remove towers, reload the configuration.
+    default: op
+    children:
+      cellphones.use: true
+      cellphones.tower.place: true
