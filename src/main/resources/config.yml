@@ -24,6 +24,17 @@ network:
   mode: single
 
 messages:
+  # Placeholders: {version}
+  help-header: "&b&lCellphones &7v{version}"
+  # Placeholders: {label}, {name}, {description}
+  help-entry: "&7/{label} {name} &f- &7{description}"
+  # One line per subcommand, shown by help.
+  help:
+    help: "Show this list."
+    reload: "Reload config.yml."
+  # Placeholders: {label}
+  unknown-subcommand: "&cUnknown subcommand. Try &f/{label} help&c."
+  reloaded: "&aCellphones configuration reloaded."
   # Placeholders: {sender}, {message}
   phone-format: "&7[&bPhone&7] &f{sender}&7: &f{message}"
   no-signal: "&cNo signal."

@@ -1,0 +1,13 @@
+# An operator file with an invalid material, a negative radius, an unsupported mode, and a missing key.
+config-version: 1
+tower:
+  material: NOT_A_MATERIAL
+  radius: -5
+  ignore-y: false
+phone:
+  material: air
+  craftable: false
+network:
+  mode: linked
+messages:
+  no-signal: "&cNo bars."

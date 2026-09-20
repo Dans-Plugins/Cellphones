@@ -21,7 +21,7 @@ The version lives only in `build.gradle.kts`; `plugin.yml` reads it through reso
 ```
 dansplugins.cellphones
 ├── Cellphones            plugin entry point: wires everything below, nothing else
-├── config/               typed access to config.yml (PluginConfig) and message formatting (Messages)
+├── config/               ConfigService (owns the current PluginConfig + Messages, (re)loads them), PluginConfig (typed, immutable), Messages (formatting)
 ├── items/                ItemTags (namespaced keys), PhoneItem, TowerItem, RecipeRegistrar
 ├── towers/               Tower (record), TowerRegistry (in-memory, world-indexed), TowerStore (towers.json codec), Coverage (pure geometry)
 ├── network/              Network: given a registry, answers "who has signal" and "can A reach B"; SingleNetwork is the MVP implementation
@@ -127,19 +127,22 @@ AsyncPlayerChatEvent @ MONITOR, ignoreCancelled = true
 
 ## Configuration
 
-`config/PluginConfig` reads `config.yml` once per (re)load into a typed object; nothing else calls `getConfig()`. On load, missing keys are added from the bundled default (`config.yml` is copied with `saveDefaultConfig`, then `options().copyDefaults(true)` + `saveConfig()`), and a `config-version` older than the plugin's is migrated key by key with a log line per change. Keys are never removed.
+`config/ConfigService.load()` runs on enable and on `/cellphones reload`: `saveDefaultConfig` writes the bundled file if absent, `reloadConfig` re-reads it, `options().copyDefaults(true)` + `saveConfig()` add any missing keys from the bundled defaults, and `config/PluginConfig.from(...)` turns the result into a typed, immutable object. Nothing else calls `getConfig()`, and every read uses the one-argument getters so a key an operator deleted still falls through to the bundled default (the two-argument getters ignore jar defaults). Keys are never removed. A `config-version` newer than `PluginConfig.CURRENT_VERSION` is logged and loaded as far as it is understood; when a version 2 layout exists, older files are migrated key by key with a log line per change.
 
-Materials are validated on load; an invalid material logs a warning and falls back to the bundled default rather than disabling the plugin.
+Values are validated on load and replaced with a logged warning rather than disabling the plugin: an unknown, air, or legacy material falls back to the bundled default, a negative `tower.radius` clamps to 0, and an unsupported `network.mode` falls back to `single`. `Material#isItem`/`#isAir` consult the server registry, so the material check is by identity (the three air constants and `isLegacy()`) and stays unit-testable.
+
+`config/Messages` formats `messages.*` — `&` colour codes and `{placeholder}` substitution — and renders a missing key as a visible `<missing message: key>` marker so documentation drift is noticed rather than hidden. Help descriptions are `messages.help.<subcommand>`.
 
 ## Testing
 
 | Area | How |
 |---|---|
-| `Coverage`, `Frequency`-style pure logic | JUnit, no mocks (`CoverageTest` exists) |
+| `Coverage` and other pure logic | JUnit, no mocks (`CoverageTest`) |
+| `PluginConfig`, `Messages` | JUnit against the bundled `config.yml` and an operator override file loaded as `YamlConfiguration` (`PluginConfigTest`, `MessagesTest`) |
 | `TowerStore` codec | JUnit against JSON fixtures, including an unknown-field and a newer-version fixture |
 | `SingleNetwork` | JUnit with a hand-built `TowerRegistry` and fake player positions |
 | `PhoneChatListener` | JUnit with Mockito: a mocked event, recipients set, and players; asserts which players get `sendMessage` |
-| Commands | Mockito `CommandSender`/`Player` |
+| Commands | Mockito `CommandSender`/`Player` with the real `Messages` (`CellphonesCommandTest`) |
 | Block listeners, recipes, real chat | The mineflayer scenario in MVP.md's acceptance criteria and the release-gates boot gate |
 
 ## Usage reporting
