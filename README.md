@@ -29,7 +29,7 @@ The plugin jar is written to `build/libs/`. Copy it into the `plugins` folder of
 
     ./gradlew clean test
 
-`BUILD SUCCESSFUL` means the tests passed. The same command runs in CI on every pull request.
+`BUILD SUCCESSFUL` means the tests passed. CI runs `./gradlew clean build` on every pull request, which includes the tests.
 
 ## Support
 
