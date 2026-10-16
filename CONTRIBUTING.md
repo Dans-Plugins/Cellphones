@@ -48,7 +48,7 @@ Run the unit tests with:
 ```bash
 ./gradlew clean test
 ```
-`BUILD SUCCESSFUL` means they passed. CI runs `./gradlew clean build` on every pull request, which includes the tests, and must pass before merging.
+There are no tests yet (`src/test/` does not exist), so this currently only checks that the plugin compiles. Once tests are added, `BUILD SUCCESSFUL` means they passed. CI runs `./gradlew clean build` on every pull request, which includes the tests, and must pass before merging.
 
 To try the plugin on a server, build it with `./gradlew build` and copy `build/libs/Cellphones-<version>.jar` into the `plugins` folder of a Spigot or Paper 1.21+ server running Java 21.
 
