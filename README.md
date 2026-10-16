@@ -6,7 +6,7 @@
 
 Cell towers and phones: a chat network for servers whose chat is local, so players with a phone in their inventory can talk beyond earshot when they are in tower coverage.
 
-The plugin is in early development. There is no release yet.
+The plugin is in early development. There is no release yet. It does not add any commands, items, or listeners yet; when the server enables or disables it, it only logs a line to the console.
 
 ## Requirements
 
@@ -29,7 +29,7 @@ The plugin jar is written to `build/libs/`. Copy it into the `plugins` folder of
 
     ./gradlew clean test
 
-`BUILD SUCCESSFUL` means the tests passed. CI runs `./gradlew clean build` on every pull request, which includes the tests.
+There are no tests yet (`src/test/` does not exist), so this currently only checks that the plugin compiles. Once tests are added, `BUILD SUCCESSFUL` means they passed. CI runs `./gradlew clean build` on every pull request, which includes the tests.
 
 ## Support
 
